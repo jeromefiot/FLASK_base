@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Liste utilisateurs{% endblock %}
+
+{% block page_content %}
+    
+<div class="page-header">
+    <h1>Liste des utilisateurs</h1>
+</div>
+
+<div class="well">
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Nom</th>
+                <th>Mail</th>
+                <th>Tél.</th>
+                <th>Adresse</th>
+                <th>Compte</th>
+                <th>Rôle</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        {% for users in user %}
+            <tr>
+                <td>{{ users.username }} </td>
+                <td>{{ users.name }}</td>
+                <td>{{ users.email }} </td>
+                <td>{{ users.telephone }} </td>
+                <td>{{ users.location }} </td>
+                <!-- Conversion ID role en texte -->
+                <td>{% if users.confirmed==1 %} Confirmé {% endif %}</td>
+                <!-- Conversion ID role en texte -->
+                <td>{% if users.role_id==2 %} Admin {% endif %}</td>
+                <td>
+                    <form class="form form-horizontal" method="post" name="Supprimer" action="{{ url_for('.list_users', id=users.id) }}">
+                        <input type=submit value="Supprimer">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

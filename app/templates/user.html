@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Flasky - {{ user.username }}{% endblock %}
+
+{% block page_content %}
+
+<div class="jumbotron jumbotron-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <h1 class="h1">
+                    Profil <small> {{user.username}}</small></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+            
+            <h4>{{user.username}}</h4>
+            <p>{% if user.name %}{{ user.name }}{% else %}Pas de Nom {% endif %}</p>
+            <cite title="{% if user.location %}{{ user.location }}{% endif %}">
+                <i class="glyphicon glyphicon-map-marker">
+                {% if user.location %}<a href="http://maps.google.com/?q={{user.location}}">{{user.location}} - {{user.codepostal}}</a>
+                {% endif %}</i>
+            </cite>
+            <p>
+                {% if current_user.is_administrator() %}
+                    <i class="glyphicon glyphicon-envelope"></i><a href="mailto:{{ user.email }}">  {{ user.email }}</a><br />
+                {% endif %}
+                <i class="glyphicon glyphicon-earphone"></i>   {{ user.telephone }}
+                <!--<br /><i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>-->
+                <br />
+                <i class="glyphicon glyphicon-ok-sign"></i>   Inscrit le : {{ moment(user.member_since).format('L') }}<br/>
+                <i class="glyphicon glyphicon-eye-open"></i>   Vu le : {{ moment(user.last_seen).fromNow() }}
+            </p>
+            <p>
+                {% if user == current_user %}
+                <a class="btn btn-default" href="{{ url_for('.edit_profile') }}">Edit Profile</a>
+                {% endif %}
+                {% if current_user.is_administrator() %}
+                <a class="btn btn-danger" href="{{ url_for('.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
+                {% endif %}
+            </p>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

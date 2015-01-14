@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Changer Email{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Changer votre Email</h1>
+</div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="well">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <p class="lead">Soyez prudent </br><span class="text-success">le mail c'est important </span></p>
+            <ul class="list-unstyled" style="line-height: 2">
+                <li><span class="fa fa-check text-success"></span> Mélangez des chiffres et des lettres !</li>
+                <li><span class="fa fa-check text-success"></span> Glissez quelques majuscules <small>(pas tout)</small></li>
+                <li><a href="#"><u>En savoir plus</u></a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
