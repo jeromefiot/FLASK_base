@@ -1,7 +1,10 @@
-Flasky
+Flask - BOILER PLATE
 ======
 
-This repository contains the source code examples for my O'Reilly book [Flask Web Development](http://www.flaskbook.com).
+Create a Flask base with lots of useful modules (sqlAlchemy, admin, script, migrate... see "requirements.txt" for all)
+I made a shell script to quickly generate a new project which make :
+ -  a new SQl base (ready to use thanx to migrate module) and create associate user
+ - a virtualenv associate
+ - a config.py associate
 
-The commits and tags in this repository were carefully created to match the sequence in which concepts are presented in the book. Please read the section titled "How to Work with the Example Code" in the book's preface for instructions.
-
+See flask-go-fast on my repo
