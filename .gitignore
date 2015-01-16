@@ -1,0 +1,19 @@
+###  01/2015
+###  Jerome FIOT
+###  gitignore for FLASK using pyCharm
+
+##########################################
+
+## files to ignore
+config.py
+
+## extensions to ignore
+*.log
+*.pot
+*.pyc
+
+## directories to ignore
+.idea/
+
+## Mac stuff
+.DS_Store
