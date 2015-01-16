@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Flasky - {{ user.username }}{% endblock %}
+{% block title %}{{ config['FLASKY_MAIL_SUBJECT_PREFIX'] }} - {{ user.username }}{% endblock %}
 
 {% block page_content %}
 
@@ -15,38 +15,74 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-lg-12">
-            
-            <h4>{{user.username}}</h4>
-            <p>{% if user.name %}{{ user.name }}{% else %}Pas de Nom {% endif %}</p>
-            <cite title="{% if user.location %}{{ user.location }}{% endif %}">
-                <i class="glyphicon glyphicon-map-marker">
-                {% if user.location %}<a href="http://maps.google.com/?q={{user.location}}">{{user.location}} - {{user.codepostal}}</a>
-                {% endif %}</i>
-            </cite>
-            <p>
-                {% if current_user.is_administrator() %}
-                    <i class="glyphicon glyphicon-envelope"></i><a href="mailto:{{ user.email }}">  {{ user.email }}</a><br />
-                {% endif %}
-                <i class="glyphicon glyphicon-earphone"></i>   {{ user.telephone }}
-                <!--<br /><i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>-->
-                <br />
-                <i class="glyphicon glyphicon-ok-sign"></i>   Inscrit le : {{ moment(user.member_since).format('L') }}<br/>
-                <i class="glyphicon glyphicon-eye-open"></i>   Vu le : {{ moment(user.last_seen).fromNow() }}
-            </p>
-            <p>
-                {% if user == current_user %}
-                <a class="btn btn-default" href="{{ url_for('.edit_profile') }}">Edit Profile</a>
-                {% endif %}
-                {% if current_user.is_administrator() %}
-                <a class="btn btn-danger" href="{{ url_for('.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
-                {% endif %}
-            </p>
-            
-        </div>
-    </div>
-</div>
 
+    <div class="row">
+	<div class="col-md-12 col-lg-12">
+             <div class="well profile">
+                <div class="col-sm-12">
+                    <div class="col-xs-12 col-sm-8">
+                        <h2>{{user.username}} </h2>
+                        <p>Nom: <strong>{% if user.name %}{{ user.name }}{% else %} -- {% endif %}</strong></p>
+                        <p>Entreprise: <strong>{{user.entreprise}}</strong></p>
+                        <p><i class="glyphicon glyphicon-map-marker">
+                            {% if user.location %}
+                                <a href="http://maps.google.com/?q={{user.location}}">{{user.location}} - {{user.codepostal}}</a>
+                            {% endif %}</i>
+                        </p>
+    <!--                    <p>Skills:
+                            <span class="tags">html5</span>
+                            <span class="tags">css3</span>
+                            <span class="tags">jquery</span>
+                            <span class="tags">bootstrap3</span>
+                        </p>-->
+                    </div>
+                    <div class="col-xs-12 col-sm-4 text-center">
+                        <figure>
+                            <img src="{{ url_for('static', filename='img/default-user-icon-profile.png') }}" alt="" class="img-circle img-responsive">
+                        </figure>
+                    </div>
+                </div>
+                <div class="col-xs-12 divider text-center">
+                    <div class="col-xs-12 col-sm-4 emphasis">
+                        <h2><strong>{{ posts|length }}</strong></h2>
+                        <p><small>Support</small></p>
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 emphasis">
+                        <h2><strong>&nbsp;</strong></h2>
+                        <p><small>&nbsp;</small></p>
+                        <div class="btn-group dropup btn-block">
+                          <button type="button" class="btn btn-primary">
+                              <span class="fa fa-gear"></span> Options
+                          </button>
+                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <ul class="dropdown-menu text-left" role="menu">
+                            <li><a href="{{ url_for('.edit_profile', username=current_user.name) }}"><span class="fa fa-edit pull-right"></span>
+                                {% if user == current_user %}
+                                    Modifier le profil
+                                {% endif %}
+                                </a>
+                            </li>
+
+                            {% if current_user.is_administrator() %}
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="{{ url_for('.edit_profile_admin', id=user.id) }}">
+                                    <span class="fa fa-edit pull-right" style="color:red;"></span>
+                                        Modifier profil [ADMIN]
+                                    </a>
+                                </li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+             </div>
+	</div>
+	</div>
+    </div>
 {% endblock %}

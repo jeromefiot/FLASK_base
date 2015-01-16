@@ -4,6 +4,37 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from flask.ext.login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
+from markdown import markdown
+import bleach
+
+
+class Post(db.Model):
+    """ Les post (accessibles seulement pour les connectes) +
+    servent au support (cf. support : 1 = oui // 0 = non)
+    Si non c'est donc un billet du blog general (que pour l'admin)
+    """
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    titre = db.Column(db.String(120))
+    content_html = db.Column(db.Text)
+    content = db.Column(db.Text)
+    support = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul', 'img',
+                        'h1', 'h2', 'h3', 'p']
+        target.content_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+    def __repr__(self):
+        return '<Post %r>' % self.titre
+
+db.event.listen(Post.content, 'set', Post.on_changed_body)
 
 
 class Permission:
@@ -52,6 +83,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
+    posts = db.relationship('Post', backref='authorblog', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
@@ -59,7 +91,7 @@ class User(UserMixin, db.Model):
     telephone = db.Column(db.String(15))
     location = db.Column(db.String(64))
     codepostal = db.Column(db.String(5))
-    about_me = db.Column(db.Text())
+    entreprise = db.Column(db.String(64))
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
 

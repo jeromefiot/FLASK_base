@@ -55,9 +55,9 @@
 
             <div class="col-lg-3 col-md-6">
                 <h3>Contact:</h3>
-				<p>Have a question or feedback? Contact me!</p>
-				<p><a href="" title="Contact me!"><i class="fa fa-envelope"></i> Contact</a></p>
-            <h3>Follow:</h3>
+				<p>Une question, un projet ? <br/>Contactez nous!</p>
+				<p><a href="" title="Contact"><i class="fa fa-envelope"></i> Contact</a></p>
+            <h3>Suivre:</h3>
 			
 			
 <a href="" id="gh" target="_blank" title="Twitter"><span class="fa-stack fa-lg">
@@ -79,7 +79,7 @@ GitHub</a>
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v2.0";
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
@@ -100,5 +100,8 @@ GitHub</a>
 </script>
 <br/>
 <hr>
-<p>Copyright © Your Website | <a href="">Privacy Policy</a> | <a href="">Terms of Use</a></p>
+<p>Copyright © HEROSYSTEME |
+    <a href="">Mentions legales</a> |
+    <a href="">Conditions d'utilisation</a> |
+    <a href="{{ url_for("main.site_map") }}">plan du site</a></p>
 </footer>

@@ -1,0 +1,8 @@
+Vous avez reçu un message depuis {{ depuis }}.
+
+----------------------
+----------------------
+
+Nom envoyeur : {{ envoyeur }} // mail : {{ mail }}
+
+Message : {{ message }}

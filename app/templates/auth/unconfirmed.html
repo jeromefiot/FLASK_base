@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Flasky - Confirm your accont{% endblock %}
+{% block title %}{{ config['FLASKY_MAIL_SUBJECT_PREFIX'] }} - Confirmation {% endblock %}
 
 {% block page_content %}
 <div class="page-header">
     <h1>
         Hello, {{ current_user.username }}!
     </h1>
-    <h3>You have not confirmed your account yet.</h3>
+    <h3>Votre compte n'est pas encore valide.</h3>
     <p>
-        Before you can access this site you need to confirm your account.
+        Avant de pouvoir accéder à votre espace, vous devez valider celui ci.
+        Vérifier votre mail, vous devez avoir reçu un email avec lien de confirmation
         Check your inbox, you should have received an email with a confirmation link.
     </p>
     <p>
-        Need another confirmation email?
-        <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+        Souhaitez vous que nous vous renvoyons un mail ?
+        <a href="{{ url_for('auth.resend_confirmation') }}">Clikez ici</a>
     </p>
 </div>
 {% endblock %}

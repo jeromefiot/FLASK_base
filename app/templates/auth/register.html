@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Flasky - Register{% endblock %}
+{% block title %}{{ config['FLASKY_MAIL_SUBJECT_PREFIX'] }} Inscription {% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>Register</h1>
+
+<div class="jumbotron jumbotron-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <h1 class="h1">
+                    S'inscrire <small></small></h1>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div class="col-md-4">
     {{ wtf.quick_form(form) }}
 </div>
 {% endblock %}
+
